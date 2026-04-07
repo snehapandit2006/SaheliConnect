@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import SOSButton from '../components/SOSButton';
+import EmergencyOverlay from '../components/EmergencyOverlay';
 
 export default function LandingPage() {
   const { currentUser } = useAuth();
+  const [isEmergency, setIsEmergency] = useState(false);
 
   return (
     <div className="bg-surface text-on-surface min-h-screen selection:bg-primary-container selection:text-on-primary-container font-body">
@@ -242,12 +245,12 @@ export default function LandingPage() {
         </div>
       </footer>
 
-      {/* Floating Action Button (FAB) */}
-      <div className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-40">
-        <Link to="/report" className="bg-gradient-to-br from-primary to-primary-container text-on-primary w-16 h-16 rounded-2xl shadow-2xl flex items-center justify-center hover:scale-110 transition-transform active:scale-90">
-          <span className="material-symbols-outlined text-3xl">chat</span>
-        </Link>
-      </div>
+      {/* Emergency System */}
+      {isEmergency ? (
+        <EmergencyOverlay onCancel={() => setIsEmergency(false)} />
+      ) : (
+        <SOSButton onClick={() => setIsEmergency(true)} />
+      )}
     </div>
   );
 }

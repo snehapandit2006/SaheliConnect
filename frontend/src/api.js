@@ -44,5 +44,6 @@ export const submitWebReport = (data) => api.post('/cases', data).then(res => re
 export const addWorker = (workerData) => api.post('/workers', workerData).then(res => res.data);
 export const deleteWorker = (workerId) => api.delete(`/workers/${workerId}`).then(res => res.data);
 export const updateNgoProfile = (profileData) => api.patch('/ngos/profile', profileData).then(res => res.data);
+export const triggerSos = (payload) => api.post('/sos', payload).then(res => res.data);
 
 export default api;

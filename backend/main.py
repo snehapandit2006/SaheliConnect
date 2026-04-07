@@ -258,8 +258,7 @@ def get_time_series(db: Session = Depends(get_db)):
         
     return {"trends": trends}
 
-@app.post("/api/webhook/whatsapp", response_model=schemas.Case)
-def whatsapp_webhook(payload: schemas.WebhookPayload, db: Session = Depends(get_db)):
+def process_incoming_report(payload: schemas.WebhookPayload, db: Session, override_priority: Optional[models.PriorityEnum] = None, override_category: Optional[str] = None) -> models.Case:
     # 1. Get or create user
     user = db.query(models.User).filter(models.User.phone_number == payload.phone_number).first()
     if not user:
@@ -270,8 +269,8 @@ def whatsapp_webhook(payload: schemas.WebhookPayload, db: Session = Depends(get_
 
     # 2. Extract intent via NLP
     intent = nlp.classify_intent(payload.message)
-    category = intent["category"]
-    priority = intent["priority"]
+    category = override_category or intent["category"]
+    priority = override_priority or models.PriorityEnum(intent["priority"])
     detected_language = intent.get("language", "en")
     
     # Update user language preference if different
@@ -301,7 +300,7 @@ def whatsapp_webhook(payload: schemas.WebhookPayload, db: Session = Depends(get_
         user_id=user.id,
         ngo_id=assigned_ngo.id if assigned_ngo else None,
         description=payload.message,
-        priority=models.PriorityEnum(priority),
+        priority=priority,
         status=models.StatusEnum.REPORTED,
         category=category,
         location=payload.location
@@ -312,10 +311,25 @@ def whatsapp_webhook(payload: schemas.WebhookPayload, db: Session = Depends(get_
     
     return new_case
 
+@app.post("/api/webhook/whatsapp", response_model=schemas.Case)
+def whatsapp_webhook(payload: schemas.WebhookPayload, db: Session = Depends(get_db)):
+    return process_incoming_report(payload, db)
+
+@app.post("/api/sos", response_model=schemas.Case)
+@limiter.limit("3/minute")
+def trigger_sos(request: Request, payload: schemas.WebhookPayload, db: Session = Depends(get_db)):
+    # Force SOS to Urgent and Danger category
+    return process_incoming_report(
+        payload, 
+        db, 
+        override_priority=models.PriorityEnum.URGENT, 
+        override_category="danger"
+    )
+
 @app.post("/api/cases", response_model=schemas.Case)
 @limiter.limit("5/minute")
 def create_case_web(request: Request, payload: schemas.WebhookPayload, db: Session = Depends(get_db)):
-    return whatsapp_webhook(payload, db)
+    return process_incoming_report(payload, db)
 
 from fastapi import Form, Response, Request
 

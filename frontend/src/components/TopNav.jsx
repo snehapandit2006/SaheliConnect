@@ -7,8 +7,11 @@ export default function TopNav() {
   const navigate = useNavigate();
 
   const handleSOS = () => {
-    alert('🆘 SOS Alert Triggered!\n\nEmergency contacts have been notified.\nStay safe — help is on the way.');
+    // For NGO staff, we can trigger a high-priority system alert
+    console.warn('NGO EMERGENCY TRIGGERED');
+    alert('🚨 EMERGENCY PROTOCOL ACTIVATED\n\nAll nearby units and administrators have been notified.\nMaintain contact with your field workers.');
   };
+ Jonah
 
   return (
     <header className="fixed top-0 w-full z-40 bg-white/80 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.04)] no-line-rule surface-tonal-shift md:left-80 md:w-[calc(100%-20rem)]">
