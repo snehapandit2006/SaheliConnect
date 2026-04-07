@@ -55,7 +55,8 @@ origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://saheliconnect.onrender.com",
-    "https://saheliconnect.vercel.app", # Common default if they use Vercel later
+    "https://saheliconnect.vercel.app",
+    "https://saheli-connect.vercel.app", # Corrected with hyphen
 ]
 
 # Add any custom frontend URL from env
