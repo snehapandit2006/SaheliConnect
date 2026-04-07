@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
@@ -101,6 +101,15 @@ export default function Login() {
               This area is restricted to authorized NGO partners only. Public users should use the Report page.
             </p>
           </div>
+        </div>
+
+        <div className="mt-8 text-center">
+          <p className="text-zinc-500 font-medium">
+            Don't have an NGO account?{' '}
+            <Link to="/signup" className="text-primary font-bold hover:underline">
+              Register here
+            </Link>
+          </p>
         </div>
       </div>
     </div>

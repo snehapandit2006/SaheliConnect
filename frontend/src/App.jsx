@@ -12,6 +12,7 @@ import ReportSubmission from './pages/ReportSubmission';
 import NgoManagement from './pages/NgoManagement';
 import WhatsAppChat from './pages/WhatsAppChat';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           {/* Public Routes — no sidebar */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
           {/* Routes with Layout */}
           <Route element={<Layout />}>

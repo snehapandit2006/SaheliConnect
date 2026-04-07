@@ -23,6 +23,11 @@ export const login = async (username, password) => {
   return res.data;
 };
 
+export const registerNgo = async (data) => {
+  const res = await api.post('/ngos/register', data);
+  return res.data;
+};
+
 export const logout = () => { /* optional callback utility */ };
 
 export const getCases = () => api.get('/cases').then(res => res.data);

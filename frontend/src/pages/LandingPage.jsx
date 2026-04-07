@@ -8,11 +8,11 @@ export default function LandingPage() {
   return (
     <div className="bg-surface text-on-surface min-h-screen selection:bg-primary-container selection:text-on-primary-container font-body">
       {/* TopAppBar */}
-      <nav className="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md shadow-sm dark:shadow-none">
+      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
         <div className="flex items-center justify-between px-6 py-4 w-full max-w-7xl mx-auto">
           <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-primary dark:text-primary-fixed">menu</span>
-            <span className="text-primary dark:text-primary-fixed font-bold tracking-tighter font-headline text-lg">Saheli Connect</span>
+            <span className="material-symbols-outlined text-primary">menu</span>
+            <span className="text-primary font-bold tracking-tighter font-headline text-lg">Saheli Connect</span>
           </div>
           <div className="hidden md:flex gap-8 items-center font-bold text-sm">
             <a className="text-primary hover:opacity-80 transition-opacity" href="#">Home</a>
@@ -189,7 +189,7 @@ export default function LandingPage() {
                 Join our network to access a streamlined case management system, coordinated volunteer dispatch, and detailed impact analytics. 
               </p>
               <div>
-                <Link to="/login" className="inline-block bg-secondary-container text-on-secondary-container px-10 py-5 rounded-full font-bold text-lg hover:scale-[1.03] transition-transform duration-200">
+                <Link to="/signup" className="inline-block bg-secondary-container text-on-secondary-container px-10 py-5 rounded-full font-bold text-lg hover:scale-[1.03] transition-transform duration-200">
                   Join as NGO Partner
                 </Link>
               </div>
@@ -220,7 +220,7 @@ export default function LandingPage() {
               <Link to="/report" className="bg-primary text-on-primary px-12 py-5 rounded-3xl font-bold text-xl shadow-xl hover:bg-primary-container transition-colors">
                 Report Now
               </Link>
-              <Link to="/login" className="bg-surface-container-high text-on-surface px-12 py-5 rounded-3xl font-bold text-xl hover:bg-surface-container-highest transition-colors">
+              <Link to="/signup" className="bg-surface-container-high text-on-surface px-12 py-5 rounded-3xl font-bold text-xl hover:bg-surface-container-highest transition-colors">
                 Partner With Us
               </Link>
             </div>
@@ -229,14 +229,14 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-stone-50 dark:bg-stone-950 w-full py-12 px-8">
+      <footer className="bg-stone-50 w-full py-12 px-8">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center space-y-6">
           <div className="text-xl font-bold text-primary font-headline tracking-tight">Saheli Connect</div>
           <div className="flex flex-wrap justify-center gap-8 text-sm font-medium">
-            <a className="text-stone-600 dark:text-stone-400 hover:text-secondary hover:underline transition-colors" href="#">Privacy Policy</a>
-            <a className="text-stone-600 dark:text-stone-400 hover:text-secondary hover:underline transition-colors" href="#">Terms of Service</a>
-            <a className="text-stone-600 dark:text-stone-400 hover:text-secondary hover:underline transition-colors" href="#">NGO Partnerships</a>
-            <a className="text-stone-600 dark:text-stone-400 hover:text-secondary hover:underline transition-colors" href="#">Contact Us</a>
+            <a className="text-stone-600 hover:text-secondary hover:underline transition-colors" href="#">Privacy Policy</a>
+            <a className="text-stone-600 hover:text-secondary hover:underline transition-colors" href="#">Terms of Service</a>
+            <a className="text-stone-600 hover:text-secondary hover:underline transition-colors" href="#">NGO Partnerships</a>
+            <a className="text-stone-600 hover:text-secondary hover:underline transition-colors" href="#">Contact Us</a>
           </div>
           <p className="text-stone-500 text-sm mt-4">© 2024 Saheli Connect. Empowering Communities.</p>
         </div>

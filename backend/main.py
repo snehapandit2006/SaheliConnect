@@ -1,7 +1,7 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Request, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 from fastapi.security import OAuth2PasswordRequestForm
 
 import models, schemas, database, nlp, auth
@@ -28,7 +28,10 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -65,6 +68,29 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
 def read_ngos(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     ngos = db.query(models.NGO).offset(skip).limit(limit).all()
     return ngos
+
+@app.post("/api/ngos/register")
+def register_ngo(ngo_data: schemas.NGOSignup, db: Session = Depends(get_db)):
+    existing = db.query(models.NGO).filter(models.NGO.email == ngo_data.email).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    
+    hashed_pw = auth.get_password_hash(ngo_data.password)
+    new_ngo = models.NGO(
+        name=ngo_data.name,
+        email=ngo_data.email,
+        hashed_password=hashed_pw,
+        location=ngo_data.location,
+        contact_info=ngo_data.contact_info,
+        services_offered="General Support",
+        capacity=10
+    )
+    db.add(new_ngo)
+    db.commit()
+    db.refresh(new_ngo)
+    
+    access_token = auth.create_access_token(data={"sub": new_ngo.email})
+    return {"access_token": access_token, "token_type": "bearer", "ngo_name": new_ngo.name, "ngo_id": new_ngo.id}
 
 @app.get("/api/cases", response_model=List[schemas.Case])
 def read_cases(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), current_ngo: models.NGO = Depends(auth.get_current_ngo)):

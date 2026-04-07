@@ -7,3 +7,7 @@ dist/
 build/
 .venv/
 venv/
+ngo_support.db
+*.sqlite
+*.db
+.vscode/

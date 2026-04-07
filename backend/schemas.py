@@ -1,6 +1,7 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
 from typing import Optional, List
 from datetime import datetime
+import re
 from models import PriorityEnum, StatusEnum
 
 class UserBase(BaseModel):
@@ -24,6 +25,36 @@ class NGOBase(BaseModel):
 
 class NGOCreate(NGOBase):
     pass
+
+class NGOSignup(BaseModel):
+    name: str = Field(..., min_length=3)
+    email: str
+    password: str = Field(..., min_length=6)
+    location: str = Field(..., min_length=3)
+    contact_info: str
+
+    @field_validator('email')
+    @classmethod
+    def validate_email(cls, v):
+        pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+        if not re.match(pattern, v):
+            raise ValueError('Invalid email format')
+        return v
+
+    @field_validator('contact_info')
+    @classmethod
+    def validate_phone(cls, v):
+        pattern = r"^\+?[\d\s-]{10,15}$"
+        if not re.match(pattern, v):
+            raise ValueError('Invalid phone number format. Must contain 10-15 digits.')
+        return v
+
+    @field_validator('name')
+    @classmethod
+    def validate_name(cls, v):
+        if not any(c.isalpha() for c in v):
+            raise ValueError('NGO Name must contain at least one letter')
+        return v
 
 class NGO(NGOBase):
     id: int

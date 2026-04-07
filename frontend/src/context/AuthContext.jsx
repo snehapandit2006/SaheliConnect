@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { login as apiLogin, logout as apiLogout } from '../api';
+import { login as apiLogin, logout as apiLogout, registerNgo as apiRegister } from '../api';
 
 const AuthContext = createContext();
 
@@ -37,6 +37,30 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const register = async (data) => {
+    try {
+      const res = await apiRegister(data);
+      const user = { id: res.ngo_id, name: res.ngo_name, token: res.access_token };
+      setCurrentUser(user);
+      localStorage.setItem('saheli_token', res.access_token);
+      localStorage.setItem('saheli_ngo_id', res.ngo_id);
+      localStorage.setItem('saheli_ngo_name', res.ngo_name);
+      return { success: true };
+    } catch (error) {
+      let detail = error?.response?.data?.detail;
+      
+      // If it's a 422 Pydantic validation error array, extract the messages
+      if (Array.isArray(detail)) {
+        detail = detail.map(err => {
+          // err.msg looks like "Value error, Invalid email format"
+          return err.msg.replace('Value error, ', '');
+        }).join(' | ');
+      }
+
+      return { success: false, error: detail || 'Registration failed. Please try again.' };
+    }
+  };
+
   const logout = () => {
     setCurrentUser(null);
     localStorage.removeItem('saheli_token');
@@ -48,6 +72,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     currentUser,
     login,
+    register,
     logout,
     loading
   };
