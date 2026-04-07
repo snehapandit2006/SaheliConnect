@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import os
 from typing import Optional
 from jose import JWTError, jwt
 from passlib.context import CryptContext
@@ -8,8 +9,8 @@ from sqlalchemy.orm import Session
 from database import get_db
 import models
 
-# Secret key for JWT. In production, this should be kept secret and loaded from environment variables!
-SECRET_KEY = "super_secret_key_for_saheli_connect"
+# Security configuration from environment
+SECRET_KEY = os.getenv("SECRET_KEY", "dev_secret_key_change_me_in_production")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7 # 7 days for dev
 

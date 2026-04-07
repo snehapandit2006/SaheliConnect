@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from fastapi.security import OAuth2PasswordRequestForm
+import os
 
 import models, schemas, database, nlp, auth
 from seed import seed_db
@@ -26,12 +27,22 @@ limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+# CORS configuration
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://saheliconnect.onrender.com",
+    "https://saheliconnect.vercel.app", # Common default if they use Vercel later
+]
+
+# Add any custom frontend URL from env
+fe_url = os.getenv("FRONTEND_URL")
+if fe_url:
+    origins.append(fe_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
