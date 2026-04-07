@@ -1,17 +1,29 @@
-from fastapi import FastAPI, Depends, HTTPException, Request, Form, Response
-from fastapi.middleware.cors import CORSMiddleware
-from contextlib import asynccontextmanager
-from sqlalchemy.orm import Session
-from typing import List, Optional
-from fastapi.security import OAuth2PasswordRequestForm
-import os
+print(">>> SAHELI CONNECT: MAIN LOADING STARTED <<<")
+import sys
+print(f">>> PYTHON VERSION: {sys.version} <<<")
 
-import models, schemas, database, nlp, auth
-from seed import seed_db
-
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
-from slowapi.errors import RateLimitExceeded
+try:
+    from fastapi import FastAPI, Depends, HTTPException, Request, Form, Response
+    from fastapi.middleware.cors import CORSMiddleware
+    from contextlib import asynccontextmanager
+    from sqlalchemy.orm import Session
+    from typing import List, Optional
+    from fastapi.security import OAuth2PasswordRequestForm
+    import os
+    
+    import models, schemas, database, nlp, auth
+    from seed import seed_db
+    
+    from slowapi import Limiter, _rate_limit_exceeded_handler
+    from slowapi.util import get_remote_address
+    from slowapi.errors import RateLimitExceeded
+    print(">>> SAHELI CONNECT: ALL IMPORTS SUCCESSFUL <<<")
+except Exception as e:
+    print(f">>> SAHELI CONNECT: IMPORT ERROR: {str(e)} <<<")
+    import traceback
+    traceback.print_exc()
+    # Still raise to avoid confusing partial boots
+    raise
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
