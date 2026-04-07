@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, Request, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from fastapi.security import OAuth2PasswordRequestForm
@@ -12,16 +13,26 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
-models.Base.metadata.create_all(bind=database.engine)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup logic
+    print("SAHELI CONNECT: Initializing Database...")
+    try:
+        models.Base.metadata.create_all(bind=database.engine)
+        db = database.SessionLocal()
+        if db.query(models.NGO).count() == 0:
+            print("SAHELI CONNECT: No records found. Running auto-seed...")
+            seed_db()
+        db.close()
+        print("SAHELI CONNECT: Startup complete.")
+    except Exception as e:
+        print(f"SAHELI CONNECT: ERROR ON STARTUP: {str(e)}")
+        # We don't raise here to allow the server to boot even if DB is temporarily down,
+        # providing better logs for the user.
+    yield
+    # Shutdown logic (if any)
 
-# Auto-seed check on startup
-db = database.SessionLocal()
-if db.query(models.NGO).count() == 0:
-    print("No database records found. Running auto-seed...")
-    seed_db()
-db.close()
-
-app = FastAPI(title="Social Support Coordination API")
+app = FastAPI(title="Social Support Coordination API", lifespan=lifespan)
 
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter

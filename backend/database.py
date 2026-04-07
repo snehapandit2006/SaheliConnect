@@ -10,6 +10,14 @@ load_dotenv()
 # Prioritize DATABASE_URL from .env, fallback to local sqlite if missing
 SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./ngo_support.db")
 
+# If Postgres, ensure we have sslmode=require for production compatibility
+if SQLALCHEMY_DATABASE_URL.startswith("postgresql"):
+    if "sslmode" not in SQLALCHEMY_DATABASE_URL:
+        if "?" in SQLALCHEMY_DATABASE_URL:
+            SQLALCHEMY_DATABASE_URL += "&sslmode=require"
+        else:
+            SQLALCHEMY_DATABASE_URL += "?sslmode=require"
+
 # Only use connect_args for sqlite, Postgres doesn't need/support check_same_thread
 if SQLALCHEMY_DATABASE_URL.startswith("sqlite"):
     engine = create_engine(
