@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NGO Management Panel | Saheli Connect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#88d3d3",
+                        "primary-fixed": "#a4f0ef",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#d9e5e2",
+                        "surface-container": "#efeded",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#3e4947",
+                        "on-background": "#1b1c1c",
+                        "outline": "#6f7979",
+                        "tertiary-fixed-dim": "#bdc9c6",
+                        "surface-dim": "#dbdad9",
+                        "background": "#fbf9f8",
+                        "surface-container-low": "#f5f3f3",
+                        "tertiary-container": "#697472",
+                        "on-primary-fixed-variant": "#004f50",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#bec9c8",
+                        "secondary-container": "#c496ff",
+                        "tertiary": "#505c5a",
+                        "surface-container-high": "#e9e8e7",
+                        "inverse-primary": "#88d3d3",
+                        "on-tertiary-fixed": "#131e1c",
+                        "on-surface-variant": "#3f4948",
+                        "surface-container-highest": "#e4e2e2",
+                        "surface-tint": "#0e6969",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#dafffe",
+                        "secondary-fixed": "#eedcff",
+                        "secondary-fixed-dim": "#d9b9ff",
+                        "secondary": "#7348ab",
+                        "on-tertiary-container": "#eefaf7",
+                        "surface-bright": "#fbf9f8",
+                        "primary": "#016464",
+                        "on-primary-fixed": "#002020",
+                        "surface-variant": "#e4e2e2",
+                        "inverse-surface": "#303031",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-surface": "#1b1c1c",
+                        "on-secondary-fixed": "#290054",
+                        "inverse-on-surface": "#f2f0f0",
+                        "error": "#ba1a1a",
+                        "primary-container": "#2d7d7d",
+                        "surface": "#fbf9f8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#5a2f91",
+                        "on-secondary-container": "#532689"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-line-rule { border: none !important; }
+        .surface-tonal-shift { background: linear-gradient(to bottom, #ffffff, #f5f3f3); }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md shadow-[0_40px_40px_-15px_rgba(27,28,28,0.06)] no-line-rule">
+<div class="flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-primary-container flex items-center justify-center">
+<img alt="user_profile_avatar" data-alt="professional portrait of an Indian woman community leader, soft warm studio lighting, neutral background, realistic style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQYS-TaedVl5Kjuxdw5tBU7Sq18ncTYwbZo1-rO5xJ-4tKreNn1wVscACUskgxATCM7MDakEUexroanfM1w3Bq7ooTR2cI5RkfSpm0jUBSFau6mkgBHTasva4gILlwDJiGYeXlYTf-MCDXD7ieLEnFT-yH6qrXWzHc5KTulQBXR1xHuz34iuYsgPJxvjnejI1m4d6FNXT5zk5fKeE4LPxlBQJEvftRUC4M0O2rg4wFyeZKD8LGwE6L6m28PUI0tooNDT6spChkaQ"/>
+</div>
+<span class="text-[#016464] dark:text-[#2d7d7d] font-extrabold tracking-tight font-['Plus_Jakarta_Sans'] text-lg">Saheli Connect</span>
+</div>
+<button class="bg-error text-on-error px-4 py-2 rounded-xl font-bold hover:scale-[1.02] transition-transform active:scale-95 duration-200">
+                SOS
+            </button>
+</div>
+</header>
+<div class="flex pt-20 h-screen">
+<!-- NavigationDrawer (Desktop) -->
+<aside class="hidden md:flex flex-col h-full w-80 bg-[#fbf9f8] dark:bg-zinc-950 py-8 shadow-2xl rounded-r-[1.5rem] z-40">
+<div class="px-8 mb-10">
+<h2 class="text-[#016464] text-2xl font-black">Impact Portal</h2>
+<p class="text-zinc-500 text-sm font-semibold">Admin Access • Admin एक्सेस</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="text-zinc-600 dark:text-zinc-400 mx-2 px-4 py-3 flex items-center gap-3 hover:bg-[#f5f3f3] transition-colors rounded-xl font-semibold" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+                </a>
+<a class="bg-[#eedcff] text-[#7348ab] rounded-xl mx-2 px-4 py-3 font-bold flex items-center gap-3 shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">corporate_fare</span> NGO Partners
+                </a>
+<a class="text-zinc-600 dark:text-zinc-400 mx-2 px-4 py-3 flex items-center gap-3 hover:bg-[#f5f3f3] transition-colors rounded-xl font-semibold" href="#">
+<span class="material-symbols-outlined">folder_shared</span> All Cases
+                </a>
+<a class="text-zinc-600 dark:text-zinc-400 mx-2 px-4 py-3 flex items-center gap-3 hover:bg-[#f5f3f3] transition-colors rounded-xl font-semibold" href="#">
+<span class="material-symbols-outlined">query_stats</span> Analytics
+                </a>
+<a class="text-zinc-600 dark:text-zinc-400 mx-2 px-4 py-3 flex items-center gap-3 hover:bg-[#f5f3f3] transition-colors rounded-xl font-semibold" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+                </a>
+</nav>
+<div class="px-6 mt-auto">
+<div class="bg-surface-container-low p-4 rounded-2xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center font-bold">SD</div>
+<div>
+<p class="text-sm font-bold">Staff Dashboard</p>
+<p class="text-xs text-zinc-500">NGO Staff Member</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto px-4 md:px-12 py-8 bg-surface">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+<div>
+<h1 class="text-4xl font-extrabold text-on-surface tracking-tight mb-2">NGO Partner Network</h1>
+<p class="text-zinc-600 font-medium text-lg leading-relaxed max-w-2xl">
+                        Manage and monitor our trusted NGO partners providing essential services. 
+                        <br/><span class="text-secondary font-bold">हमारे विश्वसनीय एनजीओ सहयोगियों और उनकी सेवाओं का प्रबंधन करें।</span>
+</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-secondary-container text-on-secondary-container px-6 py-3 rounded-2xl font-bold hover:scale-[1.02] transition-all flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined">edit</span> Edit Details
+                    </button>
+<button class="bg-gradient-to-br from-primary to-primary-container text-white px-8 py-3 rounded-2xl font-bold hover:scale-[1.02] transition-all flex items-center gap-2 shadow-lg">
+<span class="material-symbols-outlined">add</span> Add NGO
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Active Statistics Card -->
+<div class="lg:col-span-4 bg-white p-8 rounded-2xl shadow-[0_40px_40px_-15px_rgba(27,28,28,0.04)] flex flex-col justify-between">
+<div>
+<h3 class="text-zinc-500 font-bold text-xs uppercase tracking-widest mb-4">Network Overview</h3>
+<div class="flex items-baseline gap-2">
+<span class="text-5xl font-black text-primary">24</span>
+<span class="text-zinc-400 font-bold">Verified NGOs</span>
+</div>
+</div>
+<div class="mt-8 space-y-4">
+<div class="flex justify-between items-center bg-surface-container-low p-4 rounded-xl">
+<span class="font-bold">Active Services</span>
+<span class="bg-primary text-white px-3 py-1 rounded-full text-xs font-bold">142 Total</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-low p-4 rounded-xl">
+<span class="font-bold">Hindi Support</span>
+<span class="bg-secondary text-white px-3 py-1 rounded-full text-xs font-bold">100% Active</span>
+</div>
+</div>
+</div>
+<!-- Regions/Map Visualization Card -->
+<div class="lg:col-span-8 bg-surface-container-low rounded-2xl p-1 overflow-hidden relative group">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10 p-8 flex flex-col justify-end">
+<h3 class="text-white text-2xl font-bold">Coverage Areas • कवरेज क्षेत्र</h3>
+<p class="text-white/80 text-sm">Expanding safety networks across 12 major regions.</p>
+</div>
+<img class="w-full h-full object-cover rounded-2xl" data-alt="abstract stylized map of India with glowing pulse points on major cities, soft teal and purple color palette, minimal and modern design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5s1qXkXO_lqW_7BQSI3N5xR4-7gOLdoufyY0r0jVF5q-iseLjnpGBYkRs2qcgMP1y13c4Lgp54olbtDxVlYhFloYIrb3pepsLdJJEPzZX9U2GYY0r4EoSjOh7pzpBhg0r5po9s7Qy7mZ1BAcCwgHMrKpyE_h5xlRDZuMwDKlmJ2JDw_nEc7Yp-6SyJwye1dqxsx9kac1Ubeuif0-56R2SepQ2OqFMMf6v676YKX7cl4JXOMpGDTxfMQwrS6668AFFH0ZUmaS_mw"/>
+<div class="absolute top-6 right-6 z-20 flex gap-2">
+<span class="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold shadow-sm">Delhi NCR</span>
+<span class="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold shadow-sm">Mumbai</span>
+<span class="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold shadow-sm">Bangalore</span>
+</div>
+</div>
+<!-- NGO Partner List (Bento Section) -->
+<div class="lg:col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- NGO Card 1 -->
+<div class="bg-white p-6 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.02)] hover:shadow-xl transition-shadow relative overflow-hidden group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-14 h-14 bg-surface-container-highest rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">healing</span>
+</div>
+<span class="flex items-center gap-1 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span> Verified
+                            </span>
+</div>
+<h4 class="text-xl font-bold mb-1">Asha Health Collective</h4>
+<p class="text-zinc-500 text-sm mb-4">आशा स्वास्थ्य समूह • Health &amp; Wellness</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="bg-surface-container-low px-3 py-1 rounded-lg text-xs font-semibold text-zinc-600">Health</span>
+<span class="bg-surface-container-low px-3 py-1 rounded-lg text-xs font-semibold text-zinc-600">Counselling</span>
+</div>
+<div class="pt-4 border-t border-zinc-100 flex justify-between items-center">
+<span class="text-xs font-bold text-zinc-400">ID: SC-9821</span>
+<button class="text-primary font-bold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                                View Full Profile <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- NGO Card 2 -->
+<div class="bg-white p-6 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.02)] hover:shadow-xl transition-shadow relative overflow-hidden group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-14 h-14 bg-secondary-fixed rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-3xl">shield</span>
+</div>
+<span class="flex items-center gap-1 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span> Verified
+                            </span>
+</div>
+<h4 class="text-xl font-bold mb-1">Suraksha Foundation</h4>
+<p class="text-zinc-500 text-sm mb-4">सुरक्षा फाउंडेशन • Legal &amp; Safety</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="bg-surface-container-low px-3 py-1 rounded-lg text-xs font-semibold text-zinc-600">Safety</span>
+<span class="bg-surface-container-low px-3 py-1 rounded-lg text-xs font-semibold text-zinc-600">Legal Aid</span>
+</div>
+<div class="pt-4 border-t border-zinc-100 flex justify-between items-center">
+<span class="text-xs font-bold text-zinc-400">ID: SC-4432</span>
+<button class="text-primary font-bold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                                View Full Profile <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- NGO Card 3 -->
+<div class="bg-white p-6 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.02)] hover:shadow-xl transition-shadow relative overflow-hidden group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-14 h-14 bg-primary-fixed rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">work</span>
+</div>
+<span class="flex items-center gap-1 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span> Verified
+                            </span>
+</div>
+<h4 class="text-xl font-bold mb-1">Nayi Roshni Skills</h4>
+<p class="text-zinc-500 text-sm mb-4">नई रोशनी कौशल • Jobs &amp; Training</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="bg-surface-container-low px-3 py-1 rounded-lg text-xs font-semibold text-zinc-600">Vocational</span>
+<span class="bg-surface-container-low px-3 py-1 rounded-lg text-xs font-semibold text-zinc-600">Jobs</span>
+</div>
+<div class="pt-4 border-t border-zinc-100 flex justify-between items-center">
+<span class="text-xs font-bold text-zinc-400">ID: SC-1029</span>
+<button class="text-primary font-bold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                                View Full Profile <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Content Spacer for Mobile Nav -->
+<div class="h-16 md:hidden"></div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl z-50 rounded-t-[1.5rem] shadow-[0_-10px_30px_rgba(0,0,0,0.04)] no-line-rule">
+<a class="flex flex-col items-center justify-center text-zinc-500 py-2.5 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Be_Vietnam_Pro'] text-[11px] font-medium leading-[1.6]">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#016464] text-white rounded-[1.25rem] px-5 py-2.5 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">corporate_fare</span>
+<span class="font-['Be_Vietnam_Pro'] text-[11px] font-medium leading-[1.6]">NGOs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 py-2.5 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-['Be_Vietnam_Pro'] text-[11px] font-medium leading-[1.6]">Cases</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 py-2.5 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Be_Vietnam_Pro'] text-[11px] font-medium leading-[1.6]">Profile</span>
+</a>
+</nav>
+</body></html>

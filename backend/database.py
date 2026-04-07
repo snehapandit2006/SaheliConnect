@@ -1,0 +1,30 @@
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Prioritize DATABASE_URL from .env, fallback to local sqlite if missing
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./ngo_support.db")
+
+# Only use connect_args for sqlite, Postgres doesn't need/support check_same_thread
+if SQLALCHEMY_DATABASE_URL.startswith("sqlite"):
+    engine = create_engine(
+        SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+    )
+else:
+    engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

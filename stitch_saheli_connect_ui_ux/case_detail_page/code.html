@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Case Detail - Saheli Connect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#88d3d3",
+                    "primary-fixed": "#a4f0ef",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#d9e5e2",
+                    "surface-container": "#efeded",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#3e4947",
+                    "on-background": "#1b1c1c",
+                    "outline": "#6f7979",
+                    "tertiary-fixed-dim": "#bdc9c6",
+                    "surface-dim": "#dbdad9",
+                    "background": "#fbf9f8",
+                    "surface-container-low": "#f5f3f3",
+                    "tertiary-container": "#697472",
+                    "on-primary-fixed-variant": "#004f50",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#bec9c8",
+                    "secondary-container": "#c496ff",
+                    "tertiary": "#505c5a",
+                    "surface-container-high": "#e9e8e7",
+                    "inverse-primary": "#88d3d3",
+                    "on-tertiary-fixed": "#131e1c",
+                    "on-surface-variant": "#3f4948",
+                    "surface-container-highest": "#e4e2e2",
+                    "surface-tint": "#0e6969",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#dafffe",
+                    "secondary-fixed": "#eedcff",
+                    "secondary-fixed-dim": "#d9b9ff",
+                    "secondary": "#7348ab",
+                    "on-tertiary-container": "#eefaf7",
+                    "surface-bright": "#fbf9f8",
+                    "primary": "#016464",
+                    "on-primary-fixed": "#002020",
+                    "surface-variant": "#e4e2e2",
+                    "inverse-surface": "#303031",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-surface": "#1b1c1c",
+                    "on-secondary-fixed": "#290054",
+                    "inverse-on-surface": "#f2f0f0",
+                    "error": "#ba1a1a",
+                    "primary-container": "#2d7d7d",
+                    "surface": "#fbf9f8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#5a2f91",
+                    "on-secondary-container": "#532689"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "3xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Be Vietnam Pro"],
+                    "label": ["Be Vietnam Pro"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .no-line-rule { border: none !important; }
+      .surface-tonal-shift { background-color: rgba(251, 249, 248, 0.8); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-fixed">
+<!-- TopAppBar (Shared Component) -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md shadow-[0_40px_40px_-15px_rgba(27,28,28,0.06)] no-line-rule surface-tonal-shift">
+<div class="flex justify-between items-center px-6 py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface hover:bg-surface-container-low p-2 rounded-full transition-all active:scale-95">arrow_back</button>
+<h1 class="font-headline font-extrabold tracking-tight text-primary text-lg">Saheli Connect</h1>
+</div>
+<div class="flex items-center gap-3">
+<span class="bg-error text-on-error px-4 py-1.5 rounded-full font-headline font-bold text-sm tracking-wide hover:scale-[1.02] transition-transform cursor-pointer">SOS</span>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed-dim shadow-sm">
+<img class="w-full h-full object-cover" data-alt="professional headshot of an Indian female social worker with a kind expression and warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmEw_uR6iyne_Kcu9sRjvAmQfuRppV8L-uVjXgEKzoHQljADferFROz-f-MAuLnUlK06kZbiHq32q7OjatHjHCiojl0luoePgiEF_wbAppNk-b5QilX0iK4ddXpzvA4jxYwViR0RilR03pww0kurX39qIw3BEYpJeeJtsH8-WgANuDft3EJEvhEXY8siZYT8S84M6zazEgp_KJWc3-eSSIaBgRYP6ZXkldYwcKs_5v8Fp5xv2bn25u5xyn2yJ5FareNhIZ8T4q8Q"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-4 max-w-5xl mx-auto space-y-8">
+<!-- Case Header Section -->
+<section class="space-y-4">
+<div class="flex flex-wrap items-center gap-3">
+<span class="bg-secondary-fixed text-on-secondary-fixed-variant px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">Case ID: #SC-8821</span>
+<span class="bg-primary-fixed text-on-primary-fixed-variant px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">High Priority</span>
+</div>
+<h2 class="font-headline text-3xl md:text-4xl font-extrabold text-on-background leading-tight">
+                Domestic Assistance Request - Ward 12
+                <span class="block text-xl font-semibold text-secondary mt-1 tracking-tight">घरेलू सहायता अनुरोध - वार्ड 12</span>
+</h2>
+</section>
+<!-- Bento Grid Layout for Details -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Main Content: Description (Bento 2/3) -->
+<div class="md:col-span-2 space-y-6">
+<div class="bg-surface-container-lowest p-8 rounded-3xl shadow-sm space-y-6">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined">description</span>
+<h3 class="font-headline font-bold text-xl">Case Description / विवरण</h3>
+</div>
+<div class="space-y-4">
+<p class="text-on-surface-variant leading-relaxed text-lg">
+                            The reporter has requested urgent intervention regarding ongoing domestic disputes affecting basic livelihood and mental health. Immediate counseling and legal guidance on property rights were requested.
+                        </p>
+<p class="text-on-surface-variant leading-[1.6] text-lg font-medium bg-surface-container-low p-4 rounded-2xl">
+                            रिपोर्टर ने बुनियादी आजीविका और मानसिक स्वास्थ्य को प्रभावित करने वाले चल रहे घरेलू विवादों के संबंध में तत्काल हस्तक्षेप का अनुरोध किया है। संपत्ति के अधिकारों पर तत्काल परामर्श और कानूनी मार्गदर्शन का अनुरोध किया गया था।
+                        </p>
+</div>
+<div class="pt-6 border-t border-outline-variant/20 grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="flex items-start gap-4">
+<div class="p-3 bg-secondary-fixed rounded-2xl text-secondary">
+<span class="material-symbols-outlined">fingerprint</span>
+</div>
+<div>
+<p class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Reporter Type</p>
+<p class="font-headline font-bold text-on-surface">Anonymous Reporter</p>
+<p class="text-sm text-zinc-500">(अज्ञात रिपोर्टर)</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="p-3 bg-primary-fixed rounded-2xl text-primary">
+<span class="material-symbols-outlined">support_agent</span>
+</div>
+<div>
+<p class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Assigned Worker</p>
+<p class="font-headline font-bold text-on-surface">Priya Sharma</p>
+<p class="text-sm text-zinc-500">Jan Seva Foundation NGO</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Timeline Section -->
+<div class="bg-surface-container-low p-8 rounded-3xl space-y-8">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined">timeline</span>
+<h3 class="font-headline font-bold text-xl">Timeline of Actions / कार्रवाई की समयरेखा</h3>
+</div>
+</div>
+<div class="relative pl-8 space-y-10 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-outline-variant/30">
+<!-- Timeline Item 1 -->
+<div class="relative">
+<div class="absolute -left-[29px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-primary-fixed"></div>
+<div class="space-y-1">
+<span class="text-xs font-bold text-primary uppercase tracking-tighter">Oct 24, 2023 • 02:45 PM</span>
+<h4 class="font-headline font-bold text-on-surface">Initial Intake Completed</h4>
+<p class="text-sm text-on-surface-variant">First contact made via helpline. Verified reporter safety and basic needs.</p>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative">
+<div class="absolute -left-[29px] top-1 w-4 h-4 rounded-full bg-primary/40 ring-4 ring-primary-fixed/20"></div>
+<div class="space-y-1">
+<span class="text-xs font-bold text-zinc-400 uppercase tracking-tighter">Oct 25, 2023 • 10:00 AM</span>
+<h4 class="font-headline font-bold text-on-surface">NGO Assignment</h4>
+<p class="text-sm text-on-surface-variant">Jan Seva Foundation assigned to the case for field visit.</p>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative">
+<div class="absolute -left-[29px] top-1 w-4 h-4 rounded-full bg-primary/40 ring-4 ring-primary-fixed/20"></div>
+<div class="space-y-1">
+<span class="text-xs font-bold text-zinc-400 uppercase tracking-tighter">Oct 26, 2023 • 11:30 AM</span>
+<h4 class="font-headline font-bold text-on-surface">Field Visit Scheduled</h4>
+<p class="text-sm text-on-surface-variant">NGO worker Priya Sharma scheduled for in-person assessment.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar: Status & Trust (Bento 1/3) -->
+<div class="space-y-6">
+<!-- Status Card -->
+<div class="bg-secondary text-on-secondary p-8 rounded-3xl shadow-xl shadow-secondary/20 space-y-6">
+<div class="space-y-1">
+<p class="text-xs font-bold opacity-80 uppercase tracking-widest">Current Status</p>
+<p class="font-headline text-2xl font-bold">Under Review</p>
+<p class="text-sm opacity-90">समीक्षाधीन</p>
+</div>
+<div class="space-y-3">
+<button class="w-full bg-white text-secondary font-headline font-bold py-4 rounded-2xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">verified</span>
+                            Accept Case
+                        </button>
+<button class="w-full bg-secondary-container text-on-secondary-container font-headline font-bold py-4 rounded-2xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">edit_square</span>
+                            Update Status
+                        </button>
+</div>
+</div>
+<!-- Trust Indicators -->
+<div class="bg-surface-container-lowest p-6 rounded-3xl space-y-6">
+<h4 class="font-headline font-bold text-on-surface">Trust Indicators</h4>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="text-sm font-medium text-on-surface-variant">Identity Verified via NGO Portal</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="text-sm font-medium text-on-surface-variant">Safe Communication Channel Active</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="text-sm font-medium text-on-surface-variant">Data Encrypted &amp; Confidential</p>
+</div>
+</div>
+</div>
+<!-- Map / Location Placeholder -->
+<div class="rounded-3xl overflow-hidden h-48 relative shadow-sm">
+<img class="w-full h-full object-cover" data-alt="a map view showing a stylized urban grid in soft teal and white tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARsieDtFDqLNIu2o2r1FvPE6JEVfl1rXDxErOFcaAmSJ1PziechnIBS4sqkrKDEB-1_R3E7ngRE2Wy-_HX6rwMlKx0Zj3ZJd8yMtYYjFbJYVT5uZra_aptFCx7WWh46Ng1WQs33vbFUXtzyv8JxpBrxDEgxkTNeDpVIipUe960RYUHRdH_n9Q1QAtx8DFa-HuNqnVEdf4OE4cbFxhkDBvqgy9GEQQ8v52XYP4b6LlqYlFhJjtxNqVEYFK7qifaHx-bkEcGWsmB2Q"/>
+<div class="absolute inset-0 bg-primary/20 backdrop-blur-[2px] flex items-center justify-center">
+<div class="bg-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">location_on</span>
+<span class="text-xs font-bold text-on-surface">New Delhi, Sector 4</span>
+</div>
+</div>
+</div>
+<button class="w-full border-2 border-error/20 text-error font-headline font-bold py-4 rounded-2xl hover:bg-error/5 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">task_alt</span>
+                    Mark Resolved
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Shared Component) - Rendered for top-level context -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl rounded-t-[1.5rem] z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.04)] no-line-rule">
+<div class="flex flex-col items-center justify-center text-zinc-500 py-2.5 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all active:scale-90 rounded-xl px-4">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label text-[11px] font-medium leading-[1.6]">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary text-white rounded-[1.25rem] px-5 py-2.5 cursor-pointer active:scale-90 transition-all">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label text-[11px] font-medium leading-[1.6]">Cases</span>
+</div>
+<div class="flex flex-col items-center justify-center text-zinc-500 py-2.5 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all active:scale-90 rounded-xl px-4">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label text-[11px] font-medium leading-[1.6]">Stats</span>
+</div>
+<div class="flex flex-col items-center justify-center text-zinc-500 py-2.5 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all active:scale-90 rounded-xl px-4">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label text-[11px] font-medium leading-[1.6]">Profile</span>
+</div>
+</nav>
+</body></html>

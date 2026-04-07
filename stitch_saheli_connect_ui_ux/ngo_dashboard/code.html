@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Saheli Connect | NGO Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be_Vietnam_Pro:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#88d3d3",
+                    "primary-fixed": "#a4f0ef",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#d9e5e2",
+                    "surface-container": "#efeded",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#3e4947",
+                    "on-background": "#1b1c1c",
+                    "outline": "#6f7979",
+                    "tertiary-fixed-dim": "#bdc9c6",
+                    "surface-dim": "#dbdad9",
+                    "background": "#fbf9f8",
+                    "surface-container-low": "#f5f3f3",
+                    "tertiary-container": "#697472",
+                    "on-primary-fixed-variant": "#004f50",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#bec9c8",
+                    "secondary-container": "#c496ff",
+                    "tertiary": "#505c5a",
+                    "surface-container-high": "#e9e8e7",
+                    "inverse-primary": "#88d3d3",
+                    "on-tertiary-fixed": "#131e1c",
+                    "on-surface-variant": "#3f4948",
+                    "surface-container-highest": "#e4e2e2",
+                    "surface-tint": "#0e6969",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#dafffe",
+                    "secondary-fixed": "#eedcff",
+                    "secondary-fixed-dim": "#d9b9ff",
+                    "secondary": "#7348ab",
+                    "on-tertiary-container": "#eefaf7",
+                    "surface-bright": "#fbf9f8",
+                    "primary": "#016464",
+                    "on-primary-fixed": "#002020",
+                    "surface-variant": "#e4e2e2",
+                    "inverse-surface": "#303031",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-surface": "#1b1c1c",
+                    "on-secondary-fixed": "#290054",
+                    "inverse-on-surface": "#f2f0f0",
+                    "error": "#ba1a1a",
+                    "primary-container": "#2d7d7d",
+                    "surface": "#fbf9f8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#5a2f91",
+                    "on-secondary-container": "#532689"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Be Vietnam Pro"],
+                    "label": ["Be Vietnam Pro"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-line-rule { border: none !important; }
+        .surface-tonal-shift { background: linear-gradient(180deg, rgba(251, 249, 248, 0.9) 0%, rgba(245, 243, 243, 0.9) 100%); }
+        .glass-panel { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen pb-24 md:pb-0 md:pl-80">
+<!-- Top Navigation -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md shadow-[0_40px_40px_-15px_rgba(27,28,28,0.06)] no-line-rule surface-tonal-shift md:left-80 md:w-[calc(100%-20rem)]">
+<div class="flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-primary-container flex items-center justify-center text-white">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="professional woman in her 30s, warm expression, minimalist background with soft teal accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOz6bIxdm-xR-mBLAMOFoc7T9PtSdk6GA4suJuj-3A45Fy_nNu1Ir63bbv3Y6uw231TUrONsSBY8p2TQgk60PxQ2Z2F0Z4xFuvAKh7q0d9D4HVNLtpBg-XPcs9zHoMuy42esc2e5t-6JCbpKjgm4VY7-m7OWFzgnySJqhrVzFezRvx0UJMWXdCHJlZm1BqEFeAhiluXT-PGZwdxwzywBjwJuXmiSffRVCxMVQ_q0hn5xKjIDPUIOH2hUfXB7zD7BR8jDgQv-r4qA"/>
+</div>
+<div class="hidden sm:block">
+<h1 class="font-headline font-bold text-lg text-[#016464]">Saheli Connect</h1>
+<p class="text-[10px] text-zinc-500 font-medium">NGO DASHBOARD • सुरक्षित समुदाय</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center bg-green-50 px-3 py-1 rounded-full border border-green-100">
+<span class="material-symbols-outlined text-[14px] text-green-600 mr-1" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-[10px] font-bold text-green-700 uppercase tracking-wider">Verified NGO</span>
+</div>
+<button class="bg-error text-on-error px-4 py-2 rounded-xl font-headline font-bold text-sm hover:scale-[1.02] transition-transform active:scale-95 duration-200 flex items-center gap-2 shadow-lg shadow-error/20">
+<span class="material-symbols-outlined text-sm" data-icon="emergency">emergency</span>
+                    SOS
+                </button>
+</div>
+</div>
+</header>
+<!-- Sidebar (Desktop) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full w-80 bg-[#fbf9f8] dark:bg-zinc-950 flex-col py-8 shadow-2xl z-50 rounded-r-[1.5rem]">
+<div class="px-8 mb-10">
+<h2 class="text-[#016464] text-2xl font-black font-headline">Saheli</h2>
+<p class="text-secondary font-medium text-xs mt-1">Impact Portal • प्रभाव पोर्टल</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="bg-[#eedcff] text-[#7348ab] rounded-xl mx-4 px-4 py-3 font-bold flex items-center gap-4 scale-[1.01]" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="text-zinc-600 dark:text-zinc-400 mx-4 px-4 py-3 hover:bg-[#f5f3f3] transition-colors rounded-xl flex items-center gap-4" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span>All Cases</span>
+</a>
+<a class="text-zinc-600 dark:text-zinc-400 mx-4 px-4 py-3 hover:bg-[#f5f3f3] transition-colors rounded-xl flex items-center gap-4" href="#">
+<span class="material-symbols-outlined" data-icon="corporate_fare">corporate_fare</span>
+<span>NGO Partners</span>
+</a>
+<a class="text-zinc-600 dark:text-zinc-400 mx-4 px-4 py-3 hover:bg-[#f5f3f3] transition-colors rounded-xl flex items-center gap-4" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span>Analytics</span>
+</a>
+<a class="text-zinc-600 dark:text-zinc-400 mx-4 px-4 py-3 hover:bg-[#f5f3f3] transition-colors rounded-xl flex items-center gap-4" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="px-8 pt-8 border-t border-zinc-100">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+</div>
+<div>
+<p class="text-sm font-bold text-zinc-800">Support Desk</p>
+<p class="text-[10px] text-zinc-500">Available 24/7</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="pt-24 px-6 md:px-10 max-w-7xl mx-auto space-y-8">
+<!-- Welcome Header -->
+<section>
+<h2 class="font-headline text-3xl font-extrabold text-zinc-900 tracking-tight">Impact Overview</h2>
+<p class="text-zinc-500 font-medium">Monitoring community safety and empowerment. <span class="text-secondary/70 italic ml-1">प्रगति की निगरानी करें।</span></p>
+</section>
+<!-- Bento Grid Stats -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-surface-container-lowest p-6 rounded-[1.5rem] shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-white/50">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+</div>
+<p class="text-zinc-500 text-xs font-bold uppercase tracking-widest">Active Cases</p>
+<p class="text-3xl font-black text-primary mt-1">24</p>
+<div class="mt-2 text-[10px] text-green-600 font-bold bg-green-50 w-fit px-2 py-0.5 rounded-full">+4 this week</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-[1.5rem] shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-white/50">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mb-4">
+<span class="material-symbols-outlined" data-icon="done_all">done_all</span>
+</div>
+<p class="text-zinc-500 text-xs font-bold uppercase tracking-widest">Resolved</p>
+<p class="text-3xl font-black text-secondary mt-1">142</p>
+<div class="mt-2 text-[10px] text-zinc-400 font-medium italic">All time impact</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-[1.5rem] shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-white/50 lg:col-span-2 relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-zinc-500 text-xs font-bold uppercase tracking-widest">Urgency Index</p>
+<p class="text-3xl font-black text-error mt-1">85%</p>
+<p class="text-xs text-zinc-400 mt-2 max-w-[200px]">Current high-priority cases require immediate attention.</p>
+<button class="mt-4 text-xs font-bold text-primary flex items-center gap-1 group-hover:gap-2 transition-all">
+                        View Priority List <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="absolute right-[-20px] bottom-[-20px] opacity-10 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[120px]" data-icon="emergency_share">emergency_share</span>
+</div>
+</div>
+</section>
+<!-- Main Dashboard Split -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
+<!-- Case Monitoring -->
+<section class="lg:col-span-2 space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="font-headline text-xl font-bold text-zinc-800">Pending Actions</h3>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg bg-surface-container-low text-zinc-600"><span class="material-symbols-outlined" data-icon="filter_list">filter_list</span></button>
+<button class="p-2 rounded-lg bg-surface-container-low text-zinc-600"><span class="material-symbols-outlined" data-icon="search">search</span></button>
+</div>
+</div>
+<!-- Case Cards -->
+<div class="space-y-4">
+<!-- Card 1: Urgent -->
+<div class="bg-surface-container-lowest p-5 rounded-[1.5rem] shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-2xl bg-[#ffdad6] flex items-center justify-center text-error">
+<span class="material-symbols-outlined" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-bold text-zinc-900">ID #2094</h4>
+<span class="px-2 py-0.5 rounded-full bg-error text-white text-[10px] font-black uppercase">Urgent</span>
+</div>
+<p class="text-sm text-zinc-600 mt-0.5">Safety Violation • Sector 45, Gurgaon</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-zinc-400 font-bold">REPORTED</p>
+<p class="text-xs font-bold text-zinc-800">12 mins ago</p>
+</div>
+</div>
+<div class="flex items-center gap-1 mb-4">
+<div class="h-1.5 flex-1 bg-primary rounded-full"></div>
+<div class="h-1.5 flex-1 bg-zinc-100 rounded-full"></div>
+<div class="h-1.5 flex-1 bg-zinc-100 rounded-full"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<div class="w-7 h-7 rounded-full border-2 border-white bg-zinc-200 flex items-center justify-center text-[10px] font-bold">AS</div>
+<div class="w-7 h-7 rounded-full border-2 border-white bg-zinc-200 flex items-center justify-center text-[10px] font-bold">RJ</div>
+</div>
+<button class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-xl">Assign Team</button>
+</div>
+</div>
+<!-- Card 2: Medium -->
+<div class="bg-surface-container-lowest p-5 rounded-[1.5rem] shadow-sm hover:shadow-md transition-shadow">
+<div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-2xl bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-bold text-zinc-900">ID #2088</h4>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-secondary text-[10px] font-black uppercase">Medium</span>
+</div>
+<p class="text-sm text-zinc-600 mt-0.5">Health Assistance • Okhla Phase III</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-zinc-400 font-bold">STATUS</p>
+<p class="text-xs font-bold text-zinc-800">In Progress</p>
+</div>
+</div>
+<div class="flex items-center gap-1 mb-4">
+<div class="h-1.5 flex-1 bg-secondary rounded-full"></div>
+<div class="h-1.5 flex-1 bg-secondary rounded-full"></div>
+<div class="h-1.5 flex-1 bg-zinc-100 rounded-full"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="text-xs text-zinc-400 italic">Hindi: स्वास्थ्य सहायता की प्रगति में</div>
+<button class="text-primary text-xs font-bold px-4 py-2 hover:bg-primary/5 rounded-xl transition-colors">View Details</button>
+</div>
+</div>
+<!-- Card 3: Low -->
+<div class="bg-surface-container-lowest p-5 rounded-[1.5rem] shadow-sm hover:shadow-md transition-shadow">
+<div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-2xl bg-primary-fixed-dim flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-bold text-zinc-900">ID #2081</h4>
+<span class="px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-500 text-[10px] font-black uppercase">Low</span>
+</div>
+<p class="text-sm text-zinc-600 mt-0.5">Employment Inquiry • Rohini Sec 7</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-zinc-400 font-bold">STATUS</p>
+<p class="text-xs font-bold text-zinc-800">Resolved</p>
+</div>
+</div>
+<div class="flex items-center gap-1 mb-4">
+<div class="h-1.5 flex-1 bg-zinc-400 rounded-full"></div>
+<div class="h-1.5 flex-1 bg-zinc-400 rounded-full"></div>
+<div class="h-1.5 flex-1 bg-zinc-400 rounded-full"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="text-xs text-zinc-400 italic">Hindi: रोजगार सहायता संपन्न</div>
+<button class="text-zinc-400 text-xs font-bold px-4 py-2 cursor-default">Case Closed</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Sidebar Content -->
+<aside class="space-y-8">
+<!-- Mini Map Visualization -->
+<div class="bg-surface-container-low p-2 rounded-[1.75rem] overflow-hidden">
+<div class="relative h-48 w-full rounded-[1.5rem] bg-zinc-200 overflow-hidden group">
+<img alt="Delhi Map Visualization" class="w-full h-full object-cover grayscale opacity-60" data-alt="minimalist overhead map view of an urban city area with soft muted colors and clean typography" data-location="Delhi, India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu2X9lD05HF1L-IZ4A3KvCX0tahC_IRWPR4wqCDUMWYUSpxm9i12Be6ezjRO2zllc7jWl36IVU7m8uSxfoIEF96VyYMJBoOW1Tv2xwHhnu-7dNbzlglLUpnVprHru6lWs_htgfazHarCSY1V8bjwHTzGD1iazWyOI18GZB0MHRHrFU3YLMrtnYn0MMajZUJOLgNTNv2LfG8Z5cBcJD-433xrw5AW-6QbJ0iVXxUkH_Wom6o1nMypbvFO8NlGLAc_wh6XIrfoC-VA"/>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<div class="relative">
+<div class="absolute -inset-2 bg-error/20 rounded-full animate-ping"></div>
+<div class="w-4 h-4 bg-error rounded-full border-2 border-white shadow-xl relative z-10"></div>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 right-4 glass-panel bg-white/60 p-3 rounded-xl flex items-center justify-between">
+<p class="text-[10px] font-bold text-zinc-800">Real-time Map View</p>
+<span class="text-[10px] px-2 py-0.5 bg-zinc-800 text-white rounded-full">3 Alerts</span>
+</div>
+</div>
+</div>
+<!-- Notifications -->
+<div class="bg-surface-container-lowest p-6 rounded-[1.5rem] shadow-sm">
+<h4 class="font-headline font-bold text-zinc-800 mb-6 flex items-center justify-between">
+                        Recent Alerts
+                        <span class="w-2 h-2 bg-error rounded-full"></span>
+</h4>
+<div class="space-y-6">
+<div class="flex gap-3">
+<div class="w-1.5 h-10 rounded-full bg-error"></div>
+<div>
+<p class="text-xs font-bold text-zinc-900">New SOS Signal Received</p>
+<p class="text-[10px] text-zinc-500 mt-0.5">Emergency from Sector 45. Responder #4 dispatching.</p>
+<p class="text-[9px] text-zinc-400 mt-1 uppercase font-black">2 mins ago</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="w-1.5 h-10 rounded-full bg-secondary"></div>
+<div>
+<p class="text-xs font-bold text-zinc-900">Resource Milestone</p>
+<p class="text-[10px] text-zinc-500 mt-0.5">Okhla community health camp reached 50+ registrations.</p>
+<p class="text-[9px] text-zinc-400 mt-1 uppercase font-black">1 hour ago</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="w-1.5 h-10 rounded-full bg-primary"></div>
+<div>
+<p class="text-xs font-bold text-zinc-900">Feedback Received</p>
+<p class="text-[10px] text-zinc-500 mt-0.5">Case ID #2045 marked as "Excellent Support".</p>
+<p class="text-[9px] text-zinc-400 mt-1 uppercase font-black">3 hours ago</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-3 border border-zinc-100 rounded-xl text-xs font-bold text-zinc-500 hover:bg-zinc-50 transition-colors">Clear All Notifications</button>
+</div>
+</aside>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile) -->
+<footer class="md:hidden fixed bottom-0 left-0 w-full bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl rounded-t-[1.5rem] z-50 flex justify-around items-center px-4 pb-6 pt-3 shadow-[0_-10px_30px_rgba(0,0,0,0.04)] no-line-rule">
+<a class="flex flex-col items-center justify-center bg-[#016464] text-white rounded-[1.25rem] px-5 py-2.5 active:scale-90 transition-all font-['Be_Vietnam_Pro'] text-[11px] font-medium leading-[1.6]" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span>Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 py-2.5 active:scale-90 transition-all font-['Be_Vietnam_Pro'] text-[11px] font-medium leading-[1.6]" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span>Cases</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 py-2.5 active:scale-90 transition-all font-['Be_Vietnam_Pro'] text-[11px] font-medium leading-[1.6]" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span>Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 py-2.5 active:scale-90 transition-all font-['Be_Vietnam_Pro'] text-[11px] font-medium leading-[1.6]" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span>Profile</span>
+</a>
+</footer>
+</body></html>
