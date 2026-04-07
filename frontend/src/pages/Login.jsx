@@ -13,7 +13,7 @@ export default function Login() {
 
   // If already logged in, redirect to dashboard
   if (currentUser) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   const handleLogin = async (e) => {
@@ -23,7 +23,7 @@ export default function Login() {
 
     const result = await login(email.trim(), password.trim());
     if (result.success) {
-      navigate('/');
+      navigate('/dashboard');
     } else {
       setError(result.error || 'Invalid credentials');
     }

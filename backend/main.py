@@ -5,10 +5,26 @@ from typing import List
 from fastapi.security import OAuth2PasswordRequestForm
 
 import models, schemas, database, nlp, auth
+from seed import seed_db
+
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 
 models.Base.metadata.create_all(bind=database.engine)
 
+# Auto-seed check on startup
+db = database.SessionLocal()
+if db.query(models.NGO).count() == 0:
+    print("No database records found. Running auto-seed...")
+    seed_db()
+db.close()
+
 app = FastAPI(title="Social Support Coordination API")
+
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
@@ -52,7 +68,8 @@ def read_ngos(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
 @app.get("/api/cases", response_model=List[schemas.Case])
 def read_cases(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), current_ngo: models.NGO = Depends(auth.get_current_ngo)):
-    cases = db.query(models.Case).order_by(models.Case.created_at.desc()).offset(skip).limit(limit).all()
+    # Data Isolation: Only return cases strictly assigned to this NGO's ID
+    cases = db.query(models.Case).filter(models.Case.ngo_id == current_ngo.id).order_by(models.Case.created_at.desc()).offset(skip).limit(limit).all()
     return cases
 
 @app.get("/api/cases/{case_id}", response_model=schemas.Case)
@@ -86,6 +103,46 @@ def read_workers(ngo_id: int, db: Session = Depends(get_db)):
     workers = db.query(models.FieldWorker).filter(models.FieldWorker.ngo_id == ngo_id).all()
     return workers
 
+@app.post("/api/workers", response_model=schemas.FieldWorker)
+def create_worker(worker: schemas.FieldWorkerCreate, db: Session = Depends(get_db), current_ngo: models.NGO = Depends(auth.get_current_ngo)):
+    # Security: force the worker to belong to the logged-in NGO
+    db_worker = models.FieldWorker(**worker.model_dump(exclude={'ngo_id'}), ngo_id=current_ngo.id)
+    db.add(db_worker)
+    db.commit()
+    db.refresh(db_worker)
+    return db_worker
+
+@app.delete("/api/workers/{worker_id}")
+def delete_worker(worker_id: int, db: Session = Depends(get_db), current_ngo: models.NGO = Depends(auth.get_current_ngo)):
+    worker = db.query(models.FieldWorker).filter(models.FieldWorker.id == worker_id, models.FieldWorker.ngo_id == current_ngo.id).first()
+    if not worker:
+        raise HTTPException(status_code=404, detail="Worker not found or unauthorized")
+    
+    # Optional: Unassign cases mapped to this worker before deleting
+    db.query(models.Case).filter(models.Case.field_worker_id == worker.id).update({models.Case.field_worker_id: None})
+    
+    db.delete(worker)
+    db.commit()
+    return {"message": "Field worker removed successfully"}
+
+class NGOProfileUpdate(schemas.BaseModel):
+    contact_info: Optional[str] = None
+    capacity: Optional[int] = None
+    services_offered: Optional[str] = None
+
+@app.patch("/api/ngos/profile", response_model=schemas.NGO)
+def update_ngo_profile(update_data: NGOProfileUpdate, db: Session = Depends(get_db), current_ngo: models.NGO = Depends(auth.get_current_ngo)):
+    if update_data.contact_info is not None:
+        current_ngo.contact_info = update_data.contact_info
+    if update_data.capacity is not None:
+        current_ngo.capacity = update_data.capacity
+    if update_data.services_offered is not None:
+        current_ngo.services_offered = update_data.services_offered
+        
+    db.commit()
+    db.refresh(current_ngo)
+    return current_ngo
+
 @app.get("/api/analytics")
 def get_analytics(db: Session = Depends(get_db), current_ngo: models.NGO = Depends(auth.get_current_ngo)):
     total_cases = db.query(models.Case).count()
@@ -99,6 +156,46 @@ def get_analytics(db: Session = Depends(get_db), current_ngo: models.NGO = Depen
         "in_progress": in_progress,
         "urgent": urgent_cases
     }
+
+from sqlalchemy import func
+from datetime import datetime, timedelta
+
+@app.get("/api/analytics/time-series")
+def get_time_series(db: Session = Depends(get_db)):
+    # Calculate trends over the last 7 days
+    seven_days_ago = datetime.utcnow() - timedelta(days=7)
+    
+    # Query cases per day
+    daily_cases = db.query(
+        func.date(models.Case.created_at).label("date"),
+        func.count(models.Case.id).label("count")
+    ).filter(models.Case.created_at >= seven_days_ago)\
+     .group_by(func.date(models.Case.created_at))\
+     .order_by(func.date(models.Case.created_at)).all()
+     
+    # Query resolutions per day
+    daily_resolved = db.query(
+        func.date(models.Case.created_at).label("date"),
+        func.count(models.Case.id).label("count")
+    ).filter(models.Case.created_at >= seven_days_ago, models.Case.status == models.StatusEnum.RESOLVED)\
+     .group_by(func.date(models.Case.created_at))\
+     .order_by(func.date(models.Case.created_at)).all()
+    
+    # Format into structured JSON
+    trends = []
+    cases_dict = {str(d.date): d.count for d in daily_cases}
+    resolved_dict = {str(d.date): d.count for d in daily_resolved}
+    
+    for i in range(7):
+        day = (seven_days_ago + timedelta(days=i)).date()
+        date_str = str(day)
+        trends.append({
+            "date": date_str,
+            "reported": cases_dict.get(date_str, 0),
+            "resolved": resolved_dict.get(date_str, 0)
+        })
+        
+    return {"trends": trends}
 
 @app.post("/api/webhook/whatsapp", response_model=schemas.Case)
 def whatsapp_webhook(payload: schemas.WebhookPayload, db: Session = Depends(get_db)):
@@ -155,5 +252,38 @@ def whatsapp_webhook(payload: schemas.WebhookPayload, db: Session = Depends(get_
     return new_case
 
 @app.post("/api/cases", response_model=schemas.Case)
-def create_case_web(payload: schemas.WebhookPayload, db: Session = Depends(get_db)):
+@limiter.limit("5/minute")
+def create_case_web(request: Request, payload: schemas.WebhookPayload, db: Session = Depends(get_db)):
     return whatsapp_webhook(payload, db)
+
+from fastapi import Form, Response, Request
+
+@app.post("/api/webhook/twilio")
+@limiter.limit("10/minute")
+async def twilio_webhook(
+    request: Request,
+    From: str = Form(...),
+    Body: str = Form(...),
+    Latitude: str = Form(None),
+    Longitude: str = Form(None),
+    db: Session = Depends(get_db)
+):
+    # Strip whatsapp: prefix if present
+    phone_number = From.replace("whatsapp:", "")
+    
+    # Optional loc string mapping
+    loc_str = None
+    if Latitude and Longitude:
+        loc_str = f"{Latitude}, {Longitude}"
+        
+    payload = schemas.WebhookPayload(
+        phone_number=phone_number,
+        message=Body,
+        location=loc_str
+    )
+    
+    # Re-use our existing logic
+    whatsapp_webhook(payload, db)
+    
+    # Twilio expects raw XML response to acknowledge receipt
+    return Response(content="<Response></Response>", media_type="application/xml")

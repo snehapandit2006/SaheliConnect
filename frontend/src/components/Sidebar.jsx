@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const navItems = [
-  { name: 'Dashboard', path: '/', icon: 'dashboard' },
+  { name: 'Dashboard', path: '/dashboard', icon: 'dashboard' },
   { name: 'Analytics', path: '/analytics', icon: 'query_stats' },
   { name: 'NGO Partners', path: '/ngo-partners', icon: 'corporate_fare' },
   { name: 'Report / Help', path: '/report', icon: 'description' },
@@ -28,7 +28,7 @@ export default function Sidebar() {
           <NavLink
             key={item.name}
             to={item.path}
-            end={item.path === '/'}
+            end
             className={({ isActive }) =>
               isActive
                 ? "bg-[#eedcff] text-[#7348ab] rounded-xl mx-4 px-4 py-3 font-bold flex items-center gap-4 scale-[1.01] transition-transform"

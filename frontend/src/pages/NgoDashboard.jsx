@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { getCases, getAnalytics } from '../api';
 
 const categoryIcon = { protection: 'security', mental_health: 'psychology', health_hygiene: 'medical_services', skill_development: 'work', general: 'assignment' };
 const categoryLabel = { protection: 'Safety & Protection', mental_health: 'Mental Health', health_hygiene: 'Health & Hygiene', skill_development: 'Skill Development', general: 'General Inquiry' };
 const priorityStyle = {
-  urgent: { badge: 'bg-error text-white', iconBg: 'bg-[#ffdad6]', iconColor: 'text-error' },
+  urgent:   { badge: 'bg-error text-white', iconBg: 'bg-[#ffdad6]', iconColor: 'text-error' },
   moderate: { badge: 'bg-secondary-fixed text-secondary', iconBg: 'bg-secondary-fixed', iconColor: 'text-secondary' },
-  low: { badge: 'bg-zinc-100 text-zinc-500', iconBg: 'bg-primary-fixed-dim', iconColor: 'text-primary' },
+  low:      { badge: 'bg-zinc-100 text-zinc-500', iconBg: 'bg-primary-fixed-dim', iconColor: 'text-primary' },
 };
 const statusLabel = { reported: 'Reported', 'in-progress': 'In Progress', resolved: 'Resolved' };
 const progressBars = { reported: [true, false, false], 'in-progress': [true, true, false], resolved: [true, true, true] };
@@ -35,20 +35,61 @@ function Skeleton() {
   );
 }
 
+const FILTERS = [
+  { key: 'all', label: 'All' },
+  { key: 'urgent', label: '🔴 Urgent' },
+  { key: 'in-progress', label: '🔵 In Progress' },
+  { key: 'reported', label: '🟡 Reported' },
+];
+
 export default function NgoDashboard() {
   const [cases, setCases] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [search, setSearch] = useState('');
+  const [activeFilter, setActiveFilter] = useState('all');
 
   const fetchData = () => {
-    setLoading(true);
+    // Only set loading on initial fetch so polling doesn't cause UI flashing
+    if (!analytics) setLoading(true);
     Promise.all([getCases(), getAnalytics()])
       .then(([c, a]) => { setCases(c); setAnalytics(a); setError(null); })
       .catch(e => setError(e.message || 'Failed to load data'))
       .finally(() => setLoading(false));
   };
-  useEffect(() => { fetchData(); }, []);
+
+  useEffect(() => {
+    fetchData();
+    // Priority 3: Polling for real-time updates without heavy WebSockets
+    const interval = setInterval(() => {
+      Promise.all([getCases(), getAnalytics()])
+        .then(([c, a]) => { setCases(c); setAnalytics(a); setError(null); })
+        .catch(console.error); // Silently catch polling errors without destroying UX
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const pending = useMemo(() => cases.filter(c => c.status !== 'resolved'), [cases]);
+
+  const filteredCases = useMemo(() => {
+    let list = pending;
+    // Apply priority/status filter
+    if (activeFilter === 'urgent') list = list.filter(c => c.priority === 'urgent');
+    else if (activeFilter === 'in-progress') list = list.filter(c => c.status === 'in-progress');
+    else if (activeFilter === 'reported') list = list.filter(c => c.status === 'reported');
+    // Apply search
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(c =>
+        (c.description || '').toLowerCase().includes(q) ||
+        (c.location || '').toLowerCase().includes(q) ||
+        (c.category || '').toLowerCase().includes(q) ||
+        String(c.id).includes(q)
+      );
+    }
+    return list;
+  }, [pending, activeFilter, search]);
 
   if (loading) return <Skeleton />;
   if (error) return (
@@ -66,11 +107,10 @@ export default function NgoDashboard() {
   const resolved = analytics?.resolved || 0;
   const urgent = analytics?.urgent || 0;
   const urgencyPct = analytics?.total > 0 ? Math.round((urgent / analytics.total) * 100) : 0;
-  const pending = cases.filter(c => c.status !== 'resolved');
   const recentWeek = cases.filter(c => (Date.now() - new Date(c.created_at)) < 7 * 86400000).length;
 
   return (
-    <div className="px-6 md:px-10 space-y-8">
+    <div className="px-6 md:px-10 space-y-8 pb-12">
       <section>
         <h2 className="font-headline text-3xl font-extrabold text-zinc-900 tracking-tight">Impact Overview</h2>
         <p className="text-zinc-500 font-medium tracking-wide text-sm">Monitoring community safety and empowerment. <span className="text-secondary/80 italic ml-2">प्रगति की निगरानी करें।</span></p>
@@ -90,33 +130,78 @@ export default function NgoDashboard() {
           <p className="text-3xl font-black text-secondary mt-1">{resolved}</p>
           <div className="mt-2 text-[10px] text-zinc-400 font-medium italic">All time impact</div>
         </div>
-        <div className="bg-surface-container-lowest p-6 rounded-[1.5rem] shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-white/50 lg:col-span-2 relative overflow-hidden group">
+        <div className="bg-surface-container-lowest p-6 rounded-[1.5rem] shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-white/50">
+          <div className="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center text-error mb-4"><span className="material-symbols-outlined">emergency_share</span></div>
+          <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest">Urgent</p>
+          <p className="text-3xl font-black text-error mt-1">{urgent}</p>
+          <div className="mt-2 text-[10px] text-error font-bold bg-red-50 w-fit px-2 py-0.5 rounded-full">Needs attention</div>
+        </div>
+        <div className="bg-surface-container-lowest p-6 rounded-[1.5rem] shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-white/50 relative overflow-hidden group">
           <div className="relative z-10">
             <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest">Urgency Index</p>
             <p className="text-3xl font-black text-error mt-1">{urgencyPct}%</p>
-            <p className="text-xs text-zinc-400 mt-2 max-w-[200px]">{urgent} high-priority case{urgent !== 1 ? 's' : ''} require{urgent === 1 ? 's' : ''} immediate attention.</p>
-            <Link to="/analytics" className="mt-4 text-xs font-bold text-primary flex items-center gap-1 group-hover:gap-2 transition-all">View Priority List <span className="material-symbols-outlined text-sm">arrow_forward</span></Link>
+            <Link to="/analytics" className="mt-4 text-xs font-bold text-primary flex items-center gap-1 group-hover:gap-2 transition-all">Analytics <span className="material-symbols-outlined text-sm">arrow_forward</span></Link>
           </div>
-          <div className="absolute right-[-20px] bottom-[-20px] opacity-10 group-hover:scale-110 transition-transform duration-500"><span className="material-symbols-outlined text-[120px]">emergency_share</span></div>
         </div>
       </section>
 
       {/* Cases + Sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
-        <section className="lg:col-span-2 space-y-6">
-          <div className="flex items-center justify-between">
-            <h3 className="font-headline text-xl font-bold text-zinc-800">Pending Actions ({pending.length})</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <section className="lg:col-span-2 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h3 className="font-headline text-xl font-bold text-zinc-800">Pending Actions ({filteredCases.length})</h3>
+            <button onClick={fetchData} className="flex items-center gap-1 text-xs text-zinc-400 hover:text-primary transition-colors font-bold">
+              <span className="material-symbols-outlined text-sm">refresh</span> Refresh
+            </button>
           </div>
+
+          {/* Search Bar */}
+          <div className="relative">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 text-sm">search</span>
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search by ID, location, category..."
+              className="w-full pl-11 pr-4 py-3 rounded-2xl bg-surface-container-lowest border border-outline-variant/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+            />
+            {search && (
+              <button onClick={() => setSearch('')} className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-zinc-400 hover:text-zinc-600 text-sm">close</button>
+            )}
+          </div>
+
+          {/* Filter Tabs */}
+          <div className="flex gap-2 flex-wrap">
+            {FILTERS.map(f => (
+              <button
+                key={f.key}
+                onClick={() => setActiveFilter(f.key)}
+                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                  activeFilter === f.key
+                    ? 'bg-primary text-white shadow-md'
+                    : 'bg-surface-container text-zinc-600 hover:bg-surface-container-high'
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Case List */}
           <div className="space-y-4">
-            {pending.length === 0 && (
+            {filteredCases.length === 0 && (
               <div className="bg-surface-container-lowest p-8 rounded-[1.5rem] text-center">
-                <span className="material-symbols-outlined text-4xl text-zinc-300 mb-2">task_alt</span>
-                <p className="text-zinc-400 font-medium">No pending cases. All clear!</p>
+                <span className="material-symbols-outlined text-4xl text-zinc-300 mb-2">
+                  {search ? 'search_off' : 'task_alt'}
+                </span>
+                <p className="text-zinc-400 font-medium">
+                  {search ? `No cases matching "${search}"` : 'No pending cases. All clear!'}
+                </p>
               </div>
             )}
-            {pending.slice(0, 10).map(c => {
+            {filteredCases.slice(0, 12).map(c => {
               const ps = priorityStyle[c.priority] || priorityStyle.low;
-              const pb = progressBars[c.status] || [false,false,false];
+              const pb = progressBars[c.status] || [false, false, false];
               return (
                 <Link to={`/case/${c.id}`} key={c.id} className="block bg-surface-container-lowest p-5 rounded-[1.5rem] shadow-sm hover:shadow-md transition-shadow group">
                   <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
@@ -150,23 +235,30 @@ export default function NgoDashboard() {
           </div>
         </section>
 
+        {/* Sidebar */}
         <aside className="space-y-8">
+          {/* Map widget */}
           <div className="bg-surface-container-low p-2 rounded-[1.75rem] overflow-hidden">
-            <div className="relative h-48 w-full rounded-[1.5rem] bg-zinc-200 overflow-hidden group">
-              <img alt="Map" className="w-full h-full object-cover grayscale opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu2X9lD05HF1L-IZ4A3KvCX0tahC_IRWPR4wqCDUMWYUSpxm9i12Be6ezjRO2zllc7jWl36IVU7m8uSxfoIEF96VyYMJBoOW1Tv2xwHhnu-7dNbzlglLUpnVprHru6lWs_htgfazHarCSY1V8bjwHTzGD1iazWyOI18GZB0MHRHrFU3YLMrtnYn0MMajZUJOLgNTNv2LfG8Z5cBcJD-433xrw5AW-6QbJ0iVXxUkH_Wom6o1nMypbvFO8NlGLAc_wh6XIrfoC-VA" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div className="relative"><div className="absolute -inset-2 bg-error/20 rounded-full animate-ping" /><div className="w-4 h-4 bg-error rounded-full border-2 border-white shadow-xl relative z-10" /></div>
-              </div>
+            <div className="relative h-48 w-full rounded-[1.5rem] overflow-hidden group">
+              <iframe
+                title="Live coverage map"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=76.90,28.45,77.55,28.85&layer=mapnik"
+                className="w-full h-full border-0"
+              />
               <div className="absolute bottom-4 left-4 right-4 glass-panel bg-white/60 p-3 rounded-xl flex items-center justify-between pointer-events-none">
                 <p className="text-[10px] font-bold text-zinc-800">Real-time Map View</p>
                 <span className="text-[10px] px-2 py-0.5 bg-zinc-800 text-white rounded-full">{urgent} Alerts</span>
               </div>
             </div>
           </div>
+
+          {/* Recent Cases */}
           <div className="bg-surface-container-lowest p-6 rounded-[1.5rem] shadow-sm">
-            <h4 className="font-headline font-bold text-zinc-800 mb-6 flex items-center justify-between">Recent Cases {urgent > 0 && <span className="w-2 h-2 bg-error rounded-full" />}</h4>
+            <h4 className="font-headline font-bold text-zinc-800 mb-6 flex items-center justify-between">
+              Recent Cases {urgent > 0 && <span className="w-2 h-2 bg-error rounded-full animate-pulse" />}
+            </h4>
             <div className="space-y-6">
-              {cases.slice(0, 3).map(c => (
+              {cases.slice(0, 4).map(c => (
                 <Link to={`/case/${c.id}`} key={c.id} className="flex gap-3 hover:opacity-80 transition-opacity">
                   <div className={`w-1.5 h-10 rounded-full ${c.priority === 'urgent' ? 'bg-error' : c.priority === 'moderate' ? 'bg-secondary' : 'bg-primary'}`} />
                   <div>
@@ -177,6 +269,23 @@ export default function NgoDashboard() {
                 </Link>
               ))}
             </div>
+          </div>
+
+          {/* Quick links */}
+          <div className="bg-surface-container-lowest p-6 rounded-[1.5rem] shadow-sm space-y-3">
+            <h4 className="font-headline font-bold text-zinc-800 mb-2">Quick Actions</h4>
+            <Link to="/report" className="flex items-center gap-3 p-3 bg-primary/5 hover:bg-primary/10 rounded-xl transition-colors">
+              <span className="material-symbols-outlined text-primary text-sm">add_circle</span>
+              <span className="text-sm font-bold text-primary">Submit New Report</span>
+            </Link>
+            <Link to="/simulator" className="flex items-center gap-3 p-3 bg-green-50 hover:bg-green-100 rounded-xl transition-colors">
+              <span className="material-symbols-outlined text-green-600 text-sm">forum</span>
+              <span className="text-sm font-bold text-green-700">WhatsApp Simulator</span>
+            </Link>
+            <Link to="/ngo-partners" className="flex items-center gap-3 p-3 bg-secondary/5 hover:bg-secondary/10 rounded-xl transition-colors">
+              <span className="material-symbols-outlined text-secondary text-sm">corporate_fare</span>
+              <span className="text-sm font-bold text-secondary">NGO Partners</span>
+            </Link>
           </div>
         </aside>
       </div>

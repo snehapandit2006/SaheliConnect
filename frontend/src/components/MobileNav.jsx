@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const navItems = [
-  { name: 'Home', path: '/', icon: 'home' },
+  { name: 'Dashboard', path: '/dashboard', icon: 'home' },
   { name: 'Report', path: '/report', icon: 'edit_note' },
   { name: 'Stats', path: '/analytics', icon: 'leaderboard' },
   { name: 'Chat', path: '/simulator', icon: 'forum' },
@@ -19,7 +19,7 @@ export default function MobileNav() {
         <NavLink
           key={item.name}
           to={item.path}
-          end={item.path === '/'}
+          end
           className={({ isActive }) =>
             isActive
               ? "flex flex-col items-center justify-center bg-[#016464] text-white rounded-[1.25rem] px-5 py-2.5 active:scale-90 transition-all font-body text-[11px] font-medium leading-[1.6]"

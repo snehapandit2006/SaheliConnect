@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getAnalytics, getCases, getNgos } from '../api';
+import { getAnalytics, getCases, getNgos, getTimeSeries } from '../api';
 
 const categoryLabel = { protection: 'Safety & Protection', mental_health: 'Mental Health', health_hygiene: 'Health & Hygiene', skill_development: 'Skill Development', general: 'General Inquiry' };
 const priorityColor = { urgent: 'bg-error', moderate: 'bg-secondary', low: 'bg-primary' };
@@ -16,14 +16,36 @@ export default function AnalyticsDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [timeSeries, setTimeSeries] = useState(null);
+
   const fetchData = () => {
-    setLoading(true);
-    Promise.all([getAnalytics(), getCases(), getNgos()])
-      .then(([a, c, n]) => { setAnalytics(a); setCases(c); setNgos(n); setError(null); })
+    if (!analytics) setLoading(true);
+    Promise.all([getAnalytics(), getCases(), getNgos(), getTimeSeries()])
+      .then(([a, c, n, t]) => { 
+        setAnalytics(a); 
+        setCases(c); 
+        setNgos(n); 
+        setTimeSeries(t.trends);
+        setError(null); 
+      })
       .catch(e => setError(e.message || 'Failed to load'))
       .finally(() => setLoading(false));
   };
-  useEffect(() => { fetchData(); }, []);
+  useEffect(() => { 
+    fetchData(); 
+    const interval = setInterval(() => {
+      Promise.all([getAnalytics(), getCases(), getNgos(), getTimeSeries()])
+        .then(([a, c, n, t]) => { 
+          setAnalytics(a); 
+          setCases(c); 
+          setNgos(n); 
+          setTimeSeries(t.trends);
+          setError(null); 
+        })
+        .catch(console.error);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   if (loading) return <div className="px-6 md:px-12 py-8 animate-pulse space-y-8"><div className="h-12 bg-zinc-200 rounded w-64" /><div className="grid grid-cols-4 gap-6">{[1,2,3,4].map(i => <div key={i} className="h-40 bg-white rounded-2xl" />)}</div></div>;
   if (error) return (
@@ -73,6 +95,30 @@ export default function AnalyticsDashboard() {
           </div>
           <p className="text-xs text-secondary font-bold mt-4">Across {new Set(ngos.map(n => n.location)).size} regions</p>
         </div>
+      </section>
+
+      {/* Backend Time-Series Trends */}
+      <section className="mb-12">
+        <h4 className="text-xl font-bold text-on-surface font-headline mb-6">7-Day Incident Trends</h4>
+        {timeSeries && (
+          <div className="grid grid-cols-2 md:grid-cols-7 gap-4">
+            {timeSeries.map((t, idx) => (
+              <div key={idx} className="bg-surface-container-lowest p-4 rounded-2xl shadow-sm border border-outline-variant/20 text-center">
+                <p className="text-xs font-bold text-zinc-500 mb-2 uppercase tracking-wide">
+                  {new Date(t.date).toLocaleDateString('en-US', { weekday: 'short' })}
+                </p>
+                <div className="flex flex-col gap-1">
+                  <div className="bg-primary/10 rounded overflow-hidden">
+                    <p className="text-sm font-black text-primary p-1" title={`${t.reported} Reported`}>{t.reported}</p>
+                  </div>
+                  <div className="bg-secondary/10 rounded overflow-hidden">
+                    <p className="text-sm font-bold text-secondary p-1" title={`${t.resolved} Resolved`}>{t.resolved}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Category + NGO Performance */}

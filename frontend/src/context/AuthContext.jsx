@@ -31,7 +31,9 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('saheli_ngo_name', data.ngo_name);
       return { success: true };
     } catch (error) {
-      return { success: false, error: error.message };
+      // Extract clean backend message from Axios error response
+      const detail = error?.response?.data?.detail;
+      return { success: false, error: detail || 'Login failed. Please check your credentials.' };
     }
   };
 
