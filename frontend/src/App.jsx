@@ -10,7 +10,7 @@ import AnalyticsDashboard from './pages/AnalyticsDashboard';
 import CaseDetail from './pages/CaseDetail';
 import ReportSubmission from './pages/ReportSubmission';
 import NgoManagement from './pages/NgoManagement';
-import WhatsAppChat from './pages/WhatsAppChat';
+import WhatsAppSimulator from './components/WhatsAppSimulator';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NotFound from './pages/NotFound';
@@ -28,7 +28,7 @@ function App() {
           {/* Routes with Layout */}
           <Route element={<Layout />}>
             <Route path="/report" element={<ReportSubmission />} />
-            <Route path="/simulator" element={<WhatsAppChat />} />
+            <Route path="/simulator" element={<WhatsAppSimulator />} />
 
             {/* Protected Routes */}
             <Route path="/dashboard" element={<ProtectedRoute><NgoDashboard /></ProtectedRoute>} />

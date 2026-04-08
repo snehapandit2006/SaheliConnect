@@ -11,21 +11,21 @@ export default function TopNav() {
     console.warn('NGO EMERGENCY TRIGGERED');
     alert('🚨 EMERGENCY PROTOCOL ACTIVATED\n\nAll nearby units and administrators have been notified.\nMaintain contact with your field workers.');
   };
- Jonah
+
 
   return (
     <header className="fixed top-0 w-full z-40 bg-white/80 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.04)] no-line-rule surface-tonal-shift md:left-80 md:w-[calc(100%-20rem)]">
       <div className="flex justify-between items-center px-6 py-4 w-full">
         {/* Left: User info */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary font-bold text-lg">
-            {currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : 'N'}
+          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold shadow-inner">
+            {currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : (currentUser ? 'U' : 'G')}
           </div>
-          <div className="hidden sm:block">
-            <h1 className="font-headline font-bold text-base text-[#016464] leading-tight">
-              {currentUser?.name || 'NGO Dashboard'}
+          <div className="hidden sm:block text-left">
+            <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Impact Partner</p>
+            <h1 className="text-sm font-black text-on-surface font-headline truncate max-w-[120px]">
+              {currentUser?.name || 'Guest / Guest'}
             </h1>
-            <p className="text-[10px] text-zinc-500 font-medium tracking-wider uppercase">NGO Portal • सुरक्षित समुदाय</p>
           </div>
         </div>
 
@@ -47,12 +47,20 @@ export default function TopNav() {
           </button>
 
           {!currentUser && (
-            <button
-              onClick={() => navigate('/login')}
-              className="bg-primary text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-primary-container transition-colors"
-            >
-              Login
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => navigate('/login')}
+                className="text-primary font-bold text-sm hover:opacity-80 px-2"
+              >
+                Login
+              </button>
+              <button
+                onClick={() => navigate('/signup')}
+                className="bg-primary text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-primary-container transition-colors shadow-md"
+              >
+                Sign Up
+              </button>
+            </div>
           )}
         </div>
       </div>

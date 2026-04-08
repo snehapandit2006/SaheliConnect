@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Smartphone, ShieldCheck } from 'lucide-react';
 import { sendWhatsAppMessage } from '../api';
 import { motion } from 'framer-motion';
 
@@ -28,10 +27,14 @@ const WhatsAppSimulator = () => {
             const caseData = await sendWhatsAppMessage("9999999999", userMsg);
             
             setTimeout(() => {
-                let botResponse = `Thank you. Your request (Priority: ${caseData.priority}) has been safely routed to ${caseData.ngo ? caseData.ngo.name : 'our team'}. They will reach out to you shortly. Stay safe.`;
+                const priority = caseData?.priority || 'Moderate';
+                const ngoName = caseData?.ngo?.name || 'our partner NGO';
+                const lang = caseData?.user?.preferred_language || 'en';
+
+                let botResponse = `Thank you. Your request (Priority: ${priority}) has been safely routed to ${ngoName}. They will reach out to you shortly. Stay safe.`;
                 
-                if (caseData.user?.preferred_language === 'hi_roman') {
-                    botResponse = `Dhanyawad. Aapki request (Priority: ${caseData.priority}) safe tarike se ${caseData.ngo ? caseData.ngo.name : 'hamari team'} ko bhej di gayi hai. Wo jald hi aapse sampark karenge. Surakshit rahein.`;
+                if (lang === 'hi_roman') {
+                    botResponse = `Dhanyawad. Aapki request (Priority: ${priority}) safe tarike se ${ngoName} ko bhej di gayi hai. Wo jald hi aapse sampark karenge. Surakshit rahein.`;
                 }
 
                 setMessages(prev => [...prev, { id: Date.now() + 1, text: botResponse, sender: 'bot' }]);
@@ -53,7 +56,7 @@ const WhatsAppSimulator = () => {
                 {/* Simulated Phone Header */}
                 <div className="bg-surface/90 backdrop-blur-md px-6 py-4 border-b border-white/5 flex items-center gap-3 pt-8 pb-3">
                     <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30 text-primary shadow-[0_0_10px_rgba(59,130,246,0.3)]">
-                        <ShieldCheck className="w-5 h-5" />
+                        <span className="material-symbols-outlined">verified_user</span>
                     </div>
                     <div>
                         <h3 className="font-semibold text-whiteText text-base leading-tight">Aashray Support</h3>
@@ -106,7 +109,7 @@ const WhatsAppSimulator = () => {
                             disabled={!input.trim()}
                             className="bg-primary hover:bg-primaryHover text-white p-3 rounded-full flex items-center justify-center transition-all disabled:opacity-50 disabled:active:scale-100 active:scale-95 shadow-lg"
                         >
-                            <Send className="w-5 h-5 -ml-0.5" />
+                            <span className="material-symbols-outlined text-white">send</span>
                         </button>
                     </form>
                 </div>

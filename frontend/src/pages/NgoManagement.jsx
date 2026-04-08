@@ -16,6 +16,7 @@ const serviceLabel = {
   study: 'Education', health_hygiene: 'Health', medical: 'Medical',
 };
 const serviceIcon = (services) => {
+  if (!services) return 'volunteer_activism';
   if (services.includes('protection')) return 'shield';
   if (services.includes('mental_health') || services.includes('counseling')) return 'psychology';
   if (services.includes('health') || services.includes('medical')) return 'healing';
@@ -23,6 +24,7 @@ const serviceIcon = (services) => {
   return 'volunteer_activism';
 };
 const serviceIconBg = (services) => {
+  if (!services) return 'bg-primary-fixed text-primary';
   if (services.includes('protection')) return 'bg-[#ffdad6] text-error';
   if (services.includes('mental_health') || services.includes('counseling')) return 'bg-secondary-fixed text-secondary';
   if (services.includes('health') || services.includes('medical')) return 'bg-primary-fixed-dim text-primary';
@@ -121,8 +123,8 @@ export default function NgoManagement() {
     </div>
   );
 
-  const totalServices = ngos.reduce((sum, n) => sum + n.services_offered.split(',').length, 0);
-  const regions = [...new Set(ngos.map(n => n.location))];
+  const totalServices = ngos.reduce((sum, n) => sum + (n.services_offered?.split(',')?.length || 0), 0);
+  const regions = [...new Set(ngos.map(n => n.location || 'Unknown'))];
 
   return (
     <div className="px-4 md:px-12 py-8 pb-20 space-y-12">

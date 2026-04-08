@@ -10,7 +10,8 @@ const navItems = [
 ];
 
 export default function MobileNav() {
-  const { currentUser, logout } = useAuth();
+  const auth = useAuth() || {};
+  const { currentUser, logout } = auth;
   const navigate = useNavigate();
 
   return (

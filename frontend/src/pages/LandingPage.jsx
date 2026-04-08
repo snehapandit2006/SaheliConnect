@@ -25,17 +25,24 @@ export default function LandingPage() {
           </div>
           <div className="flex items-center gap-4">
             {currentUser ? (
-              <Link to="/dashboard" className="bg-primary text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md hover:bg-primary-container transition-colors">
-                Dashboard
-              </Link>
+              <>
+                <Link to="/dashboard" className="bg-primary text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md hover:bg-primary-container transition-colors">
+                  Dashboard
+                </Link>
+                <div className="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border-2 border-primary-container">
+                  <img alt="User Profile" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUNHFWgEFeMwNl-1ge-V5U_py0pZXSkfa7buwUglS0wqAGofVcZjEUX9SUEd4uzf7uFhpBUqNRuWTpkKskBv_F0VAnZwbQdPwmedUUB1qYbZrq4FKKU9GnWmtGy1WMReXwRJC99mvLHSBQ9CSnvaNURX-212TxcazbWM_JxU34s_E0klQEO1Q8KLvBTCd1ewZa8LyD_tUxbDTXDf9ZSvmC3cC6-V-YES5NmwxJyi1imQXQ238qdL1aRR0uK2Uh6b8OHM--0ruzsQ"/>
+                </div>
+              </>
             ) : (
-              <Link to="/login" className="text-primary font-bold hover:opacity-80 transition-opacity text-sm">
-                NGO Login
-              </Link>
+              <>
+                <Link to="/login" className="text-primary font-bold hover:opacity-80 transition-opacity text-sm hidden sm:block">
+                  NGO Login
+                </Link>
+                <Link to="/signup" className="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-xl text-sm font-bold shadow-sm hover:scale-[1.02] transition-all">
+                  Join as NGO
+                </Link>
+              </>
             )}
-            <div className="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border-2 border-primary-container">
-              <img alt="User Profile" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUNHFWgEFeMwNl-1ge-V5U_py0pZXSkfa7buwUglS0wqAGofVcZjEUX9SUEd4uzf7uFhpBUqNRuWTpkKskBv_F0VAnZwbQdPwmedUUB1qYbZrq4FKKU9GnWmtGy1WMReXwRJC99mvLHSBQ9CSnvaNURX-212TxcazbWM_JxU34s_E0klQEO1Q8KLvBTCd1ewZa8LyD_tUxbDTXDf9ZSvmC3cC6-V-YES5NmwxJyi1imQXQ238qdL1aRR0uK2Uh6b8OHM--0ruzsQ"/>
-            </div>
           </div>
         </div>
       </nav>
